@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    font-size: 14px;
+}
+
+svg {
+    float: left;
+}
+
+text {
+    dominant-baseline: hanging;
+    text-anchor: middle;
+}
