@@ -28,31 +28,36 @@ var lfpData = _(raw)
     .value();
 ;
 
-// CONFIGURATION
+// CALENDAR CONFIGURATION AND GLOBALS
 
 var firstDay = mkDate(2014, 9, 1);   // September 1st 2014
 var lastDay  = mkDate(2014, 12, 31); // December 31st 2014
 var displayedMonth = 10; // initially October
 var calendarWidth = 800;
 var calendarHeight = 600;
+
+var calendarGroup, wCell, hCell;
+
+// RING CONFIGURATION AND GLOBALS
+
 var ringDiameter = 400;
-
-// GLOBALS
-
-var day    = function(x) { return +d3.time.format("%w")(x); } // 0 - 6
-var week   = function(x) { return +d3.time.format("%U")(x); } // 0 - 51
-var month  = function(x) { return +d3.time.format("%m")(x); } // 1 - 12
-var format = d3.time.format("%b %e"); // Jan 1 - Dec 31
-function mkDate(y, m, d) { return new Date(y, m - 1, d); }
 var outerRadius = ringDiameter / 2;
 var innerRadius = ringDiameter / 3;
 var arc = d3.svg.arc()
     .innerRadius(innerRadius)
     .outerRadius(outerRadius)
 ;
-var color = d3.scale.category10();
 
-var ring, calendarGroup, wCell, hCell;
+var ring;
+
+// GLOBALS
+
+function mkDate(y, m, d) { return new Date(y, m - 1, d); }
+var day    = function(x) { return +d3.time.format("%w")(x); } // 0 - 6
+var week   = function(x) { return +d3.time.format("%U")(x); } // 0 - 51
+var month  = function(x) { return +d3.time.format("%m")(x); } // 1 - 12
+var format = d3.time.format("%b %e"); // Jan 1 - Dec 31
+var color = d3.scale.category10();
 
 $(document).ready(function() {
 
@@ -82,6 +87,27 @@ $(document).ready(function() {
     update();
 
 });
+
+function keydownHandler() {
+
+    switch (d3.event.keyCode) {
+
+    case 37: // Left
+        displayedMonth--;
+        break;
+
+    case 39: // Right
+        displayedMonth++;
+        break;
+
+    };
+
+    displayedMonth = Math.max(displayedMonth, month(firstDay));
+    displayedMonth = Math.min(displayedMonth, month(lastDay));
+
+    update();
+
+}
 
 function update() {
 
@@ -255,26 +281,5 @@ function updateRing() {
             return d.data.key + " (" + d.value + ")";
         })
     ;
-
-}
-
-function keydownHandler() {
-
-    switch (d3.event.keyCode) {
-
-    case 37: // Left
-        displayedMonth--;
-        break;
-
-    case 39: // Right
-        displayedMonth++;
-        break;
-
-    };
-
-    displayedMonth = Math.max(displayedMonth, month(firstDay));
-    displayedMonth = Math.min(displayedMonth, month(lastDay));
-
-    update();
 
 }
