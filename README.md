@@ -2,17 +2,14 @@ learn-from-peers
 ================
 
 This repository is for example code used in Learn From Peers sessions beginning in Fall 2014.
-* Queues
-* Pie-chart
-* Calendar
-***
 
 #Schedule
-* 10/15: D3 (Valentin) d3/
-* 10/29: Chrome Dev Tools (Wilson)
-* 11/05: Julia (Tristan) julia/
-* 11/12: Git (Anup)
-* 11/19: tcpdump (Karyn)
-* 11/26: Kickstarter Experience with Codespells (Lindsey/Stephen)
-* 12/03: Postgres (Kian)
-***
+Date  |     Topic     | Presenter | Directory
+----  | ------------- | --------- | ---------
+10/15 |      D3       | Valentin  | d3/
+10/29 | Chrome Dev Tools | Wilson |
+11/05 |     Julia     |  Tristan  | julia/
+11/12 |      Git      |   Anup    |
+11/19 |    tcpdump    |   Karyn   |
+11/26 | Kickstarter Experience with Codespells | Lindsey/Stephen |
+12/03 |    Postgres   |   Kian    |
