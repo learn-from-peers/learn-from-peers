@@ -1,0 +1,32 @@
+===================================================
+
+We visited the website __________________
+and performed a (ICMP) traceroute to _____________.
+
+===================================================
+
+Write the tcpdump command(s) and filter(s) to answer the following questions:
+
+
+1.  What is our DNS server? Hint: what port does DNS normally run on?
+
+
+2.  Did we use TCP or UDP to communicate with the DNS server?
+
+
+3.  What is the IP address of the website we visited?
+
+
+4.  What User-Agent String did we use to access the website?
+
+
+5.  How many packets did the website send us?
+
+
+6.  What is the TTL of the first packet we sent?  Hint: use http://www.networksorcery.com/enp/
+
+
+7.  Did we ever see a packet with TTL 5?
+
+
+8.  Did we ever send a packet with TTL > 64?
