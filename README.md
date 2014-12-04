@@ -11,5 +11,6 @@ Date  |     Topic     | Presenter | Directory
 11/05 |     Julia     |  Tristan  | julia/
 11/12 |      Git      |   Anup    |
 11/19 |    tcpdump    |   Karyn   |
-11/26 | Kickstarter Experience with Codespells | Lindsey/Stephen |
-12/03 |    Postgres   |   Kian    |
+11/26 | Kickstarter Experience with Codespells | Lindsey/Stephen |CANCELLED
+12/03 |    Postgres   |   Kian Win |
+12/10 | Floating Point Numbers | Marc |
