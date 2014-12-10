@@ -11,7 +11,7 @@ Date  |     Topic     | Presenter
 11/05 |     Julia     |  Tristan  
 11/12 |      Git      |   Anup    
 11/19 |    tcpdump    |   Karyn   
-11/26 | Kickstarter Experience with Codespells | Lindsey/Stephen
+11/26 | Kickstarter Experience with Codespells | Lindsey/Stephen (CANCELLED)
 12/03 |    Postgres   |   Kian Win
 12/10 | Floating Point Numbers | Marc
-12/12 | How to Throw a Party | Valentin | party
+12/12 | How to Throw a Party | Valentin
