@@ -1,0 +1,178 @@
+set nocompatible   " vi is so 1970
+
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'vim-scripts/camelcasemotion'
+Plugin 'myusuf3/numbers.vim'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
+Plugin 'sjl/gundo.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'godlygeek/tabular'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Set filetype things to be on
+filetype plugin indent on
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Configure options
+
+set hidden         " Allow for hidden buffers
+set modelines=0    " Never use modelines
+set wrap           " Don't wrap lines
+set backspace=indent,eol,start
+                   " backspace over everything in insert mode
+set tabstop=2      " a tab is 2 spaces
+set softtabstop=2  " Use soft tabs
+set expandtab      " Keep using soft tabs
+set shiftwidth=2   " Use 2 spaces for autoindenting
+
+set number         " show line numbers
+set showmatch      " show matching parenthesis
+set ignorecase     " Ignore case when searching
+set smartcase      " Case matters if search pattern is not all lowercase
+
+set smarttab       "  insert tabs on the start of a line according to
+                  "    shiftwidth, not tabstop
+set nojoinspaces  " Put one space between sentences
+set visualbell
+
+" Do encodings right
+set termencoding=utf-8
+set encoding=utf-8
+set lazyredraw                  " don't update the display while executing macros
+set laststatus=2                " tell VIM to always put a status line in, even
+                                "    if there is only one window
+set cmdheight=1                 " use a status bar that is 2 rows high
+
+set textwidth=80        " When wrapping, use 80 character columns
+
+" Use correct tabcompletion for filenames
+set wildmenu
+set wildmode=longest,list
+
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.so,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.DS_Store                       " OSX nonsense
+set wildignore+=*.pyc                            " Python byte code
+set wildignore+=*.class                          " Save me from Java
+
+set nobackup    " never write backups
+set noswapfile  " never write swapfiles
+
+set ttyfast     " Speed some things up
+
+" syntax highlighting
+syntax on
+
+" I am incapable of letting the shift key go. Use these aliases to ignore the
+" issue.
+command! -bang E e<bang>
+command! -bang Q q<bang>
+command! -bang QA qa<bang>
+command! -bang Qa qa<bang>
+command! -bang VS vs<bang>
+command! -bang Vs vs<bang>
+command! -bang W w<bang>
+command! -bang WA wa<bang>
+command! -bang Wa wa<bang>
+command! -bang WQ wq<bang>
+command! -bang Wq wq<bang>
+
+""""""""""""""""""""""""""""""""""""""""""""""""
+" use z to go backward after an [ftFT]
+noremap z ,
+let mapleader="," " change the mapleader from \ to ,
+
+" ,W - strip all trailing whitespace in file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>0
+
+" Format a paragraph
+nnoremap <leader>p gqap
+
+" ,w - vertical split and move over
+nnoremap <leader>w <C-w>v<C-w>l
+
+" ,q - split tabs
+nnoremap <leader>q :tab split<CR>
+
+" Resize splits when the window is resized
+autocmd VimResized * exe "normal! \<c-w>="
+
+if !has("gui_running")
+  au CursorHold * checktime
+endif
+
+set undodir=~/.vim/undo/ " set the undo directory
+set undofile            " persist undo across vim session
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Use CamelCaseMotion for all movement commands
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+omap <silent> iw <Plug>CamelCaseMotion_iw
+xmap <silent> iw <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
+omap <silent> ie <Plug>CamelCaseMotion_ie
+xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+" Set vim-session all up
+let g:session_default_overwrite = 1   " overwrite default session; don't bug me about it
+let g:session_autoload = 'no'         " never autoload a session
+let g:session_autosave = 'yes'        " autosave on quit
+let g:session_autosave_periodic = 60  " minutes
+let g:session_persist_globals = []
+  call add(g:session_persist_globals, '&tabstop')
+  call add(g:session_persist_globals, '&softtabstop')
+  call add(g:session_persist_globals, '&shiftwidth')
+  "call add(g:session_persist_globals, 'noexpandtab')
+let g:session_command_aliases = 1     " add aliases that start with Session*
+
+nnoremap <leader>u :GundoToggle<cr>
+
+" customize ctrlp
+let g:ctrlp_map = '<c-o>'
+let g:ctrlp_max_files = 0
+let g:ctrlp_max_depth = 64
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+" ctrp-p directory is nearest parent repo, or directory of current file
+let g:ctrlp_working_path_mode = 'ra'
+
+" TagBar
+nnoremap <silent> <leader>t :TagbarToggle<CR>
+
+" Tabularize
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:<CR>
+vmap <Leader>a: :Tabularize /:<CR>
+nmap <Leader>a:: :Tabularize /:\zs<CR>
+vmap <Leader>a:: :Tabularize /:\zs<CR>
+nmap <Leader>a, :Tabularize /,<CR>
+vmap <Leader>a, :Tabularize /,<CR>
+nmap <Leader>a<Bslash> :Tabularize /\<CR>
+vmap <Leader>a<Bslash> :Tabularize /\<CR>
+nmap <leader>a/ :Tabularize //<cr>
+vmap <leader>a/ :Tabularize //<cr>
+nmap <leader>a<Bar> :Tabularize /<Bar><cr>
+vmap <leader>a<Bar> :Tabularize /<Bar><cr>
+nmap <Leader>a[ :Tabularize /[<CR>
+vmap <Leader>a[ :Tabularize /[<CR>
+nmap <Leader>a] :Tabularize /]<CR>
+vmap <Leader>a] :Tabularize /]<CR>

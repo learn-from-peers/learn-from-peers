@@ -1,0 +1,500 @@
+set nocompatible   " vi is so 1970
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Do vundle/plugins setup
+set wildignore-=.git " without this, the isdirectory check fails if .vimrc is sourced twice
+filetype off
+if !isdirectory(expand("~/.vim/bundle/vundle/.git"))
+  !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+endif
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+"  " required!
+Bundle 'gmarik/vundle'
+
+Bundle 'vim-scripts/camelcasemotion'
+Bundle 'godlygeek/tabular'
+Bundle 'kien/ctrlp.vim'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'sjl/gundo.vim'
+Bundle 'groenewege/vim-less'
+Bundle 'vim-scripts/localvimrc'
+"Bundle 'Valloric/YouCompleteMe'
+Bundle 'myusuf3/numbers.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-session'
+Bundle 'robbevan/Vagrantfile.vim'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
+
+" Set filetype things to be on
+filetype plugin indent on
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Configure options
+
+if has("gui_macvim")
+  colorscheme molokai
+  set fuopt=maxvert,maxhorz
+endif
+
+" If this is command-line vim, constantly check if the file has been updated
+" underneath us.
+if !has("gui_running")
+  au CursorHold * checktime
+endif
+
+set hidden         " Allow for hidden buffers
+set modelines=0    " Never use modelines
+let mapleader=","  " change the mapleader from \ to ,
+set wrap           " Don't wrap lines
+set backspace=indent,eol,start
+                   " backspace over everything in insert mode
+set tabstop=2      " a tab is 2 spaces
+set softtabstop=2  " Use soft tabs
+set expandtab      " Keep using soft tabs
+set shiftwidth=2   " Use 2 spaces for autoindenting
+
+set number         " show line numbers
+set showmatch      " show matching parenthesis
+set ignorecase     " Ignore case when searching
+set smartcase      " Case matters if search pattern is not all lowercase
+
+set smarttab       "  insert tabs on the start of a line according to
+                   "    shiftwidth, not tabstop
+                   "
+" Make searches use normal syntax
+nnoremap / /\v
+vnoremap / /\v
+set hlsearch      " highlight search matches
+set incsearch     " search as you type
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+                  " Press space to cancel search highlight
+set nojoinspaces  " Put one space between sentences
+set visualbell
+
+" Do encodings right
+set termencoding=utf-8
+set encoding=utf-8
+set lazyredraw                  " don't update the display while executing macros
+set laststatus=2                " tell VIM to always put a status line in, even
+                                "    if there is only one window
+set cmdheight=1                 " use a status bar that is 2 rows high
+
+set formatoptions+=o    " Insert comment header when starting new line
+set formatoptions-=t    " Do not auto-wrap text using textwidth
+set formatoptions+=c    " Do auto-wrap comments using textwidth
+set formatoptions+=q    " Allow formatting of comments with gq
+
+set textwidth=80        " When wrapping, use 80 character columns
+
+set history=1000        " Store much history
+set undolevels=1000     " Store lots of undo
+
+set undodir=~/.vim/undo/ " set the undo directory
+set undofile            " persist undo across vim sessions
+
+set tabpagemax=50       " if given a bunch of files on the commmand line, open a bunch of tabs
+
+" Use correct tabcompletion for filenames
+set wildmenu
+set wildmode=longest,list
+
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.so,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.DS_Store                       " OSX nonsense
+set wildignore+=*.pyc                            " Python byte code
+set wildignore+=*.class                          " Save me from Java
+
+set nobackup    " never write backups
+set noswapfile  " never write swapfiles
+
+set ttyfast     " Speed some things up
+
+" syntax highlighting
+syntax on
+
+" Highlight tabs and trailing whitespace
+autocmd Syntax * syn match TrailingWhitespace /\s\+$\| \+\ze\t/ containedin=ALL
+highlight TrailingWhitespace ctermbg=yellow guibg=yellow
+
+autocmd Syntax * syn match Tabs /\t/ containedin=ALL
+highlight Tabs ctermbg=red guibg=red
+
+" Another way to EOL whitespace highlighting
+"set list
+"set listchars=tab:\ \ ,trail:\ ,extends:»,precedes:«
+"highlight SpecialKey ctermbg=Yellow guibg=Yellow
+"autocmd filetype html,xml set listchars-=tab:>.
+
+" Make indenting nice
+set autoindent nocindent nosmartindent
+
+" Resize splits when the window is resized
+au VimResized * exe "normal! \<c-w>="
+
+" Set an awesome status line
+set statusline=#%n\ %F%m%r%h%w%y%{PasteStatus()}\ (hex=\%02.2B)\ %{tagbar#currenttag('[%s]\ ','')}%=(%l/%L,%v)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Add some nice keymappings
+
+" use C-; to go backward after an [ftFT]
+noremap z ,
+
+" make j and k operate as expected on wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+" Faster window navigation
+" map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+" imap <C-h> <esc><C-w>h
+imap <C-j> <esc><C-w>j
+imap <C-k> <esc><C-w>k
+imap <C-l> <esc><C-w>l
+
+" Move between tabs easily
+nmap <C-p> gT
+nmap <C-n> gt
+imap <C-p> <esc>gT
+imap <C-n> <esc>gt
+
+" Use readline-style keys on the command-line
+" start of line
+:cnoremap <C-A>  <Home>
+" back one character
+:cnoremap <C-B>  <Left>
+" delete character under cursor
+:cnoremap <C-D>  <Del>
+" end of line
+:cnoremap <C-E>  <End>
+" forward one character
+:cnoremap <C-F>  <Right>
+" recall newer command-line
+:cnoremap <C-N>  <Down>
+" recall previous (older) command-line
+:cnoremap <C-P>  <Up>
+" back one word
+:cnoremap <Esc><C-B>  <S-Left>
+" forward one word
+:cnoremap <Esc><C-F>  <S-Right>
+
+" Use tab to move between bracket pairs
+nnoremap <tab> %
+vnoremap <tab> %
+
+" Turn off help
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" ,W - strip all trailing whitespace in file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+" ,v - reselect just pasted text
+nnoremap <leader>v V`]
+
+" ,w - vertical split and move over
+nnoremap <leader>w <C-w>v<C-w>l
+
+" ,q - split tabs
+nnoremap <leader>q :tab split<CR>
+
+" Stringify a line
+nnoremap <leader>s I"<esc>A",<esc>j
+
+" Format a paragraph
+nnoremap <leader>p gqap
+
+" ,l -  show tag list for current token
+nnoremap <leader>l :tselect<CR>
+
+" gw - swap word
+nnoremap <silent> gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o><c-l>:nohlsearch<Bar>:echo<CR>
+
+" CTAGS shortcuts
+nnoremap <leader>cn tnext
+nnoremap <leader>cp tprev
+nnoremap <leader>cs tselect
+
+" Handle tabs!
+nnoremap <leader><tab>8 :call UseTabs(8)<CR>
+nnoremap <leader><tab>4 :call UseTabs(4)<CR>
+nnoremap <leader><tab>2 :call UseTabs(2)<CR>
+nnoremap <leader><tab>s :call StopTabs()<CR>
+nnoremap <leader><tab><tab> :call ToggleTabs()<CR>
+
+" <leader>cd changes to directory the one containing the current buffer
+map <leader>cd :cd %:p:h<CR>
+
+" if you don't have write permissions, :w!! saves using sudo
+cmap w!! w !sudo tee % >/dev/null
+
+" Easier linewise reselection
+nnoremap <leader>V V`]
+
+" Split line (sister to [J]oin lines)
+" The normal use of S is covered by cc, so don't worry about shadowing it.
+nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+
+" Very specific IDontKnowAThing twitter cleanup
+"nnoremap <leader>k :g/\(^More$\)\|\([rR]etweets\)\|\(IDontKnowAThing\)/d <CR>
+
+nnoremap <leader>k :g/^More$\\|IDontKnowAThing\\|[rR]etweet/d <CR>
+
+" I am incapable of letting the shift key go. Use these aliases to ignore the
+" issue.
+command! -bang E e<bang>
+command! -bang Q q<bang>
+command! -bang QA qa<bang>
+command! -bang Qa qa<bang>
+command! -bang VS vs<bang>
+command! -bang Vs vs<bang>
+command! -bang W w<bang>
+command! -bang WA wa<bang>
+command! -bang Wa wa<bang>
+command! -bang WQ wq<bang>
+command! -bang Wq wq<bang>
+
+" In insert mode, move about if you want
+inoremap <c-a> <esc>I
+inoremap <c-e> <esc>A
+
+" Commands to reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :source $MYVIMRC<CR>
+
+" Ostensibly, we would use pastetoggle. Unfortunately, that doesn't update the
+" modeline, so we added this.
+"nmap <F3> :set paste!<BAR>:set paste?<CR>
+set pastetoggle=<F3>
+
+function! PasteStatus()
+  if &paste
+    return "[paste]"
+  else
+    return ""
+  endif
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Customization for plugins
+
+" use <c-e> and ,n for sparkup
+let g:sparkupExecuteMapping = '<c-e>'
+let g:sparkupNextMapping = '<leader>n'
+let g:sparkup = '~/.vim/bundle/sparkup'
+
+" Customize CtrlP
+let g:ctrlp_map = '<c-o>'
+let g:ctrlp_max_files = 0
+let g:ctrlp_max_depth = 64
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+" ctrp-p directory is nearest parent repo, or directory of current file
+let g:ctrlp_working_path_mode = 'ra'
+
+
+" Customize Gundo
+nnoremap <leader>u :GundoToggle<cr>
+
+" Use CamelCaseMotion for all movement commands
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+omap <silent> iw <Plug>CamelCaseMotion_iw
+xmap <silent> iw <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
+omap <silent> ie <Plug>CamelCaseMotion_ie
+xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+" Tabularize
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:<CR>
+vmap <Leader>a: :Tabularize /:<CR>
+nmap <Leader>a:: :Tabularize /:\zs<CR>
+vmap <Leader>a:: :Tabularize /:\zs<CR>
+nmap <Leader>a, :Tabularize /,<CR>
+vmap <Leader>a, :Tabularize /,<CR>
+nmap <Leader>a<Bslash> :Tabularize /\<CR>
+vmap <Leader>a<Bslash> :Tabularize /\<CR>
+nmap <leader>a/ :Tabularize //<cr>
+vmap <leader>a/ :Tabularize //<cr>
+nmap <leader>a<Bar> :Tabularize /<Bar><cr>
+vmap <leader>a<Bar> :Tabularize /<Bar><cr>
+nmap <Leader>a[ :Tabularize /[<CR>
+vmap <Leader>a[ :Tabularize /[<CR>
+nmap <Leader>a] :Tabularize /]<CR>
+vmap <Leader>a] :Tabularize /]<CR>
+
+
+" TagBar
+nnoremap <silent> <leader>t :TagbarToggle<CR>
+
+" Turn off YouCompleteMe for certain filetypes
+let g:ycm_filetypes_to_completely_ignore = {
+      \ 'tex': 1
+      \}
+
+" Fix NumbersToggle toggle key
+nnoremap <C-L> :NumbersToggle<CR>
+
+" Set vim-session all up
+let g:session_default_overwrite = 1   " overwrite default session; don't bug me about it
+let g:session_autoload = 'no'         " never autoload a session
+let g:session_autosave = 'yes'        " autosave on quit
+let g:session_autosave_periodic = 60  " minutes
+let g:session_persist_globals = []
+  call add(g:session_persist_globals, '&tabstop')
+  call add(g:session_persist_globals, '&softtabstop')
+  call add(g:session_persist_globals, '&shiftwidth')
+  "call add(g:session_persist_globals, 'noexpandtab')
+let g:session_command_aliases = 1     " add aliases that start with Session*
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Language Specific
+"
+" In C and Python modes, use s as the range command for SmartString instead of
+" for "sentence".
+autocmd filetype c,python omap as az
+autocmd filetype c,python omap is iz
+
+" Turn on spelling correction only in .tex files
+autocmd filetype tex,plaintex set spell
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Helpful functions
+
+function! UseTabs(tabwidth)
+  let b:TabsEnabled     = 1
+  let b:TabsTabStop     = &g:tabstop
+  let b:TabsSoftTabStop = &g:softtabstop
+  let b:TabsShiftWidth  = &g:shiftwidth
+
+  syntax clear Tabs
+  let &tabstop     = a:tabwidth
+  let &softtabstop = a:tabwidth
+  let &shiftwidth  = a:tabwidth
+  set noexpandtab "product tabs instead of spaces
+endfunction
+com! -nargs=1 UseTabs :call UseTabs(<f-args>)
+
+function! StopTabs()
+  if exists("b:TabsTabStop")
+    let &tabstop=b:TabsTabStop
+    unlet b:TabsTabStop
+  endif
+  if exists("b:TabsTabWidth")
+    let &tabwidth=b:TabsTabWidth
+    unlet b:TabsTabWidth
+  endif
+  if exists("b:TabsShiftWidth")
+    let &shiftwidth=b:TabsShiftWidth
+    unlet b:TabsShiftWidth
+  endif
+
+  syntax match Tabs /\t/ containedin=ALL
+  set expandtab
+  unlet b:TabsEnabled
+endfunction
+com! -nargs=0 StopTabs :call StopTabs()
+
+function! ToggleTabs()
+  if exists("b:TabsEnabled")
+    call StopTabs()
+  else
+    call UseTabs(8)
+  endif
+endfunction
+com! -nargs=0 ToggleTabs :call ToggleTabs()
+
+" select everything between the closest pair of double or single quotes.
+function! SelectSmartString(type)
+  let rgx = '[\"'']'
+
+  if a:type =~ "a"
+    let begin = searchpos(rgx, 'bW')
+    let ending = searchpos(rgx, 'eW')
+  else
+    " Find the character just after the first match
+    let begin = searchpos(rgx.'\zs', 'bWe')
+    " Find the character just before the last match
+    let ending = searchpos('.\ze'.rgx, 'W')
+  end
+
+  execute 'normal!v'
+  call cursor(begin)
+  normal! o
+  call cursor(ending)
+  return [begin,ending]
+endfunction
+" Set up z as the range command for the SmartString
+omap az :call SelectSmartString('a')<CR>
+omap iz :call SelectSmartString('i')<CR>
+
+" Borrowed from
+" https://bitbucket.org/sjl/dotfiles/src/e484a4d62a7b/vim/vimrc?at=default
+"
+" Next and Last {{{
+" Motion for "next/last object".  "Last" here means "previous", not "final".
+" Unfortunately the "p" motion was already taken for paragraphs.
+"
+" Next acts on the next object of the given type in the current line, last acts
+" on the previous object of the given type in the current line.
+"
+" Currently only works for (, [, {, b, r, B, ', and ".
+"
+" Some examples (C marks cursor positions, V means visually selected):
+"
+" din'  -> delete in next single quotes                foo = bar('spam')
+"                                                      C
+"                                                      foo = bar('')
+"                                                                C
+"
+" canb  -> change around next parens                   foo = bar('spam')
+"                                                      C
+"                                                      foo = bar
+"                                                               C
+"
+" vil"  -> select inside last double quotes            print "hello ", name
+"                                                                        C
+"                                                      print "hello ", name
+"                                                             VVVVVV
+onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
+xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
+onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
+xnoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
+
+onoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
+xnoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
+onoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+xnoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
+
+function! s:NextTextObject(motion, dir)
+  let c = nr2char(getchar())
+
+  if c ==# "b"
+      let c = "("
+  elseif c ==# "B"
+      let c = "{"
+  elseif c ==# "d"
+      let c = "["
+  endif
+
+  exe "normal! ".a:dir.c."v".a:motion.c
+endfunction
+
+" }}}
+
