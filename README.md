@@ -28,7 +28,7 @@ Date  |     Topic     | Presenter | Link to presentation | Link to code
 03/04 | Writing your own Chrome extensions  | Neha Chachra  |      | [Github](https://github.com/nchachra/etymole)
 03/11 |
 
-#Fall 2015 Schedule
+#Fall 2014 Schedule
 
 Date  |     Topic     | Presenter 
 ----  | ------------- | --------- 
@@ -41,3 +41,11 @@ Date  |     Topic     | Presenter
 12/03 |    Postgres   |   Kian Win
 12/10 | Floating Point Numbers | Marc
 12/12 | How to Throw a Party | Valentin
+
+#Miscelleneous LFP resources
+
+Topic                       | Presenter
+--------------------------- | ---------
+Staying fit in grad school  | Sheeraz
+Chrome Extensions           | Neha
+R and ggplot                | Neha

@@ -1,0 +1,47 @@
+/* The element that fradulently dropped a cookie is animated to zoom on hover.
+ */
+body {
+  min-width: 600px;
+  overflow-x: hidden;
+}
+
+.hide {
+  display: None;
+}
+
+.visible {
+  display: block;
+}
+
+.foreign {
+  font-style: italic;
+}
+
+.flash {
+  background: #cee5F5;
+  padding: 0.5em;
+  border: 1px solid #aacbe2;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.mainDiv {
+  margin: 2%;
+}
+
+.section-header {
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  letter-spacing: .1rem;
+  font-weight: 600;
+}
+
+#last-search {
+  font-size: 0.8em;
+  color:gray;
+  margin-bottom: 2%;
+}
+
+#search-box {
+  margin-bottom: 1%;
+}
