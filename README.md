@@ -7,9 +7,6 @@ This repo records all the Learn from Peers talk slides and the code the used dur
 
 Date  |     Topic     | Presenter | Link to presentation
 ----  | ------------- | --------- | --------------------
-10/04 | How to Develop Chrome Extensions | Vector Li | 
-10/11 | AI and Intelligent Automation - Who will be the Winners? | Luke Liem | 
-10/18 | *Cancelled* | *None* |
-10/25 | Video Processing Techniques | Lixiang Ao |
-11/01 | Bluetooth Hacking | Nishant Bhaskar | 
-11/08 | HCI: Affective Computing | Teng Hu |
+01/10 | Understanding Bitcoin | Vector Li |
+01/17 | Apply Med School | Michael Barrow | [google slides link](https://docs.google.com/presentation/d/1PJ7VKsQ14FZJu2Pcoro5Vxoha2P033ZDKeYk-xOtV-U/edit?usp=sharing) 
+
