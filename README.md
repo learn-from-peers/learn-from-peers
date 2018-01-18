@@ -3,7 +3,7 @@ learn-from-peers
 
 This repo records all the Learn from Peers talk slides and the code the used during the presentation.
 
-#Fall 2017 Schedule
+#Winter 2018 Schedule
 
 Date  |     Topic     | Presenter | Link to presentation
 ----  | ------------- | --------- | --------------------
